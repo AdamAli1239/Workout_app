@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
+
+const workoutRoutes = require("./routes/workoutRoutes");
+
 const express = require("express");
 
 const app = express();
@@ -10,6 +13,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/api/workouts", workoutRoutes);
 app.listen(process.env.PORT, () => {
   console.log(`listening on port ${process.env.PORT}`);
   mongoose
