@@ -28,4 +28,8 @@ const deleteWorkout = async (req, res) => {
 };
 module.exports = {
   getAllWorkouts,
+  getWorkout,
+  createWorkout,
+  updateWorkout,
+  deleteWorkout,
 };
