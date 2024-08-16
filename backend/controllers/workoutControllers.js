@@ -1,14 +1,20 @@
 const Workout = require("../models/workoutModel");
-
+const mongoose = require("mongoose");
 // This will be the function to get all workout documents in the database
 const getAllWorkouts = async (req, res) => {
   const workouts = await Workout.find({});
+  if (workouts.length === 0) {
+    return res.status(404).json({ message: "No workouts available" });
+  }
   res.status(200).json(workouts);
 };
 
 //this will be the function to get a specific workout document
 const getWorkout = async (req, res) => {
   const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: "invalid id" });
+  }
   const userWorkout = await Workout.findById(id);
   res.status(200).json(userWorkout);
 };
@@ -39,7 +45,13 @@ const updateWorkout = async (req, res) => {
 
 const deleteWorkout = async (req, res) => {
   const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: "object id is not valid" });
+  }
   const deletedWorkout = await Workout.findByIdAndDelete(id);
+  if (deletedWorkout === null) {
+    return res.status(404).json({ message: "No workout found with that id" });
+  }
   res.status(200).json(deletedWorkout);
 };
 module.exports = {
