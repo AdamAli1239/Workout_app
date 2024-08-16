@@ -1,4 +1,4 @@
-const workout = require("../models/workoutModel");
+const Workout = require("../models/workoutModel");
 
 // This will be the function to get all workout documents in the database
 const getAllWorkouts = async (req, res) => {
@@ -13,7 +13,15 @@ const getWorkout = async (req, res) => {
 // this will be to create a workout document
 
 const createWorkout = async (req, res) => {
-  res.status(200).json({ message: "In createWorkout" });
+  const { title, reps, load } = req.body;
+
+  const workout = await Workout.create({
+    title: title,
+    reps: reps,
+    load: load,
+  });
+
+  res.status(200).json(workout);
 };
 
 //this will be to update a workout
