@@ -8,7 +8,7 @@ const WorkoutReducer = (state, action) => {
       };
     case "CREATE_WORKOUTS":
       return {
-        workouts: [action.payload, ...state.lmao],
+        workouts: [action.payload, ...state.workouts],
       };
 
     case "DELETE_WORKOUT":
