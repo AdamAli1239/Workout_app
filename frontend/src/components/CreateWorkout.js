@@ -1,9 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
+import { useWorkoutContext } from "./hooks/useWorkoutContext";
 const CreateWorkout = () => {
+  const { dispatch } = useWorkoutContext();
+  let navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [reps, setReps] = useState("");
   const [load, setLoad] = useState("");
+
   const createPost = async () => {
     const response = await fetch("/api/workouts/create", {
       method: "POST",
@@ -18,6 +23,9 @@ const CreateWorkout = () => {
       setTitle("");
       setReps("");
       setLoad("");
+      dispatch({ type: "CREATE_WORKOUTS", payload: json });
+
+      navigate(-1);
     }
   };
   const handleSubmit = (e) => {
@@ -51,7 +59,7 @@ const CreateWorkout = () => {
         value={load}
         onChange={(e) => setLoad(e.target.value)}
       ></input>
-      <button>Click me to submit :</button>
+      <button>Click me to submit :)</button>
     </form>
   );
 };
